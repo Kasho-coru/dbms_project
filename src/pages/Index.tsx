@@ -28,7 +28,7 @@ export default function Index() {
             <div className="h-9 w-9 rounded-xl gradient-primary grid place-items-center shadow-glow">
               <Heart className="h-5 w-5 text-primary-foreground" fill="currentColor" />
             </div>
-            <span className="font-display font-bold text-lg">HemaCare<span className="text-primary"> Emergency</span></span>
+            <span className="font-display font-bold text-lg">SBB<span className="text-primary">-ERMS</span></span>
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             <a href="#features" className="hover:text-primary transition-smooth">Features</a>
@@ -55,7 +55,7 @@ export default function Index() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={hero} alt="HemaCare hospital corridor" width={1600} height={900} className="w-full h-full object-cover opacity-40" />
+          <img src={hero} alt="Hospital corridor" width={1600} height={900} className="w-full h-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent" />
         </div>
         <div className="container relative py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center">
@@ -151,7 +151,7 @@ export default function Index() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Heart className="h-4 w-4 text-primary" fill="currentColor" />
-              <span className="font-display font-bold">HemaCare</span>
+              <span className="font-display font-bold">SBB-ERMS</span>
             </div>
             <p className="text-muted-foreground">Revolutionizing emergency response through intelligent blood supply management.</p>
           </div>
@@ -169,7 +169,7 @@ export default function Index() {
           </div>
         </div>
         <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">
-          © 2026 HemaCare Emergency Management Systems. All rights reserved.
+          © 2026 Smart Blood Bank & Emergency Response Management System. All rights reserved.
         </div>
       </footer>
     </div>
