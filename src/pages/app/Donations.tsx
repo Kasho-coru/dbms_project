@@ -8,12 +8,12 @@ export default function Donations() {
   return (
     <CrudPage title="Donation Records" subtitle="Every contribution logged and traceable."
       table="donation_records" pk="donation_id"
-      defaultRow={{ units_donated: 1, donation_date: new Date().toISOString().split("T")[0] }}
+      defaultRow={{ quantity: 1, donation_date: new Date().toISOString().split("T")[0] }}
       fields={[
         { key: "donor_id", label: "Donor", type: "select", options: (donors.data ?? []).map(d => ({ label: d.name, value: d.donor_id })), render: v => dName(v) },
         { key: "bank_id", label: "Bank", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
         { key: "donation_date", label: "Date", type: "date" },
-        { key: "units_donated", label: "Units", type: "number", required: true, render: v => <span className="font-bold text-primary">{v}</span> },
+        { key: "quantity", label: "Quantity", type: "number", required: true, render: v => <span className="font-bold text-primary">{v}</span> },
       ]} />
   );
 }

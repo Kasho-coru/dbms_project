@@ -7,14 +7,11 @@ export default function Screening() {
   return (
     <CrudPage title="Medical Screening" subtitle="Eligibility verification before every donation."
       table="screenings" pk="screening_id"
-      defaultRow={{ screening_result: "Pass", status: "Completed" }}
+      defaultRow={{ result: "Pass", screening_date: new Date().toISOString().split("T")[0] }}
       fields={[
         { key: "donor_id", label: "Donor", type: "select", options: (donors.data ?? []).map(d => ({ label: d.name, value: d.donor_id })), render: v => dName(v) },
-        { key: "temperature", label: "Temp (°F)", type: "number" },
-        { key: "blood_pressure", label: "BP" },
-        { key: "disease_history", label: "Disease History" },
-        { key: "screening_result", label: "Result", type: "select", options: ["Pass","Fail"], render: v => <StatusBadge status={v} /> },
-        { key: "screening_date", label: "Date", type: "date" },
+        { key: "screening_date", label: "Date", type: "date", required: true },
+        { key: "result", label: "Result", type: "select", options: ["Pass","Fail"], render: v => <StatusBadge status={v} /> },
       ]} />
   );
 }

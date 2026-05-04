@@ -11,8 +11,8 @@ export default function Transfers() {
       table="transfer_records" pk="transfer_id"
       defaultRow={{ units_transferred: 1, transfer_date: new Date().toISOString().split("T")[0] }}
       fields={[
-        { key: "from_bank_id", label: "From", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
-        { key: "to_bank_id", label: "To", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
+        { key: "source_bank_id", label: "From", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
+        { key: "destination_bank_id", label: "To", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
         { key: "blood_group_id", label: "Group", type: "select", options: (groups.data ?? []).map(g => ({ label: g.group_name, value: g.blood_group_id })), render: v => <BloodChip group={gName(v)} /> },
         { key: "units_transferred", label: "Units", type: "number", required: true },
         { key: "transfer_date", label: "Date", type: "date" },
