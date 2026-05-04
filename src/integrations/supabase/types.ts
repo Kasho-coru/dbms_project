@@ -14,7 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      blood_banks: {
+      blood_bank: {
         Row: {
           bank_id: number
           contact_number: string | null
@@ -35,7 +35,7 @@ export type Database = {
         }
         Relationships: []
       }
-      blood_groups: {
+      blood_group: {
         Row: {
           blood_group_id: number
           group_name: string
@@ -77,33 +77,33 @@ export type Database = {
             foreignKeyName: "blood_stock_bank_id_fkey"
             columns: ["bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "blood_stock_blood_group_id_fkey"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "fk_stock_bank"
             columns: ["bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "fk_stock_group"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
         ]
       }
-      camps: {
+      camp: {
         Row: {
           camp_id: number
           date: string
@@ -124,7 +124,7 @@ export type Database = {
         }
         Relationships: []
       }
-      donation_records: {
+      donation_record: {
         Row: {
           bank_id: number | null
           donation_date: string
@@ -151,33 +151,33 @@ export type Database = {
             foreignKeyName: "donation_records_bank_id_fkey"
             columns: ["bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "donation_records_donor_id_fkey"
             columns: ["donor_id"]
             isOneToOne: false
-            referencedRelation: "donors"
+            referencedRelation: "donor"
             referencedColumns: ["donor_id"]
           },
           {
             foreignKeyName: "fk_don_bank"
             columns: ["bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "fk_don_donor"
             columns: ["donor_id"]
             isOneToOne: false
-            referencedRelation: "donors"
+            referencedRelation: "donor"
             referencedColumns: ["donor_id"]
           },
         ]
       }
-      donors: {
+      donor: {
         Row: {
           age: number
           blood_group_id: number | null
@@ -213,19 +213,19 @@ export type Database = {
             foreignKeyName: "donors_blood_group_id_fkey"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "fk_donors_group"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
         ]
       }
-      eligibility_logs: {
+      eligibility_log: {
         Row: {
           log_id: number
           remarks: string | null
@@ -249,19 +249,19 @@ export type Database = {
             foreignKeyName: "eligibility_logs_screening_id_fkey"
             columns: ["screening_id"]
             isOneToOne: false
-            referencedRelation: "screenings"
+            referencedRelation: "screening"
             referencedColumns: ["screening_id"]
           },
           {
             foreignKeyName: "fk_elog_screen"
             columns: ["screening_id"]
             isOneToOne: false
-            referencedRelation: "screenings"
+            referencedRelation: "screening"
             referencedColumns: ["screening_id"]
           },
         ]
       }
-      emergency_requests: {
+      emergency_request: {
         Row: {
           blood_group_id: number | null
           hospital_id: number | null
@@ -291,33 +291,33 @@ export type Database = {
             foreignKeyName: "emergency_requests_blood_group_id_fkey"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "emergency_requests_hospital_id_fkey"
             columns: ["hospital_id"]
             isOneToOne: false
-            referencedRelation: "hospitals"
+            referencedRelation: "hospital"
             referencedColumns: ["hospital_id"]
           },
           {
             foreignKeyName: "fk_er_group"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "fk_er_hosp"
             columns: ["hospital_id"]
             isOneToOne: false
-            referencedRelation: "hospitals"
+            referencedRelation: "hospital"
             referencedColumns: ["hospital_id"]
           },
         ]
       }
-      hospitals: {
+      hospital: {
         Row: {
           contact_number: string | null
           hospital_id: number
@@ -338,7 +338,7 @@ export type Database = {
         }
         Relationships: []
       }
-      screenings: {
+      screening: {
         Row: {
           donor_id: number | null
           result: string
@@ -362,14 +362,14 @@ export type Database = {
             foreignKeyName: "fk_screen_donor"
             columns: ["donor_id"]
             isOneToOne: false
-            referencedRelation: "donors"
+            referencedRelation: "donor"
             referencedColumns: ["donor_id"]
           },
           {
             foreignKeyName: "screenings_donor_id_fkey"
             columns: ["donor_id"]
             isOneToOne: false
-            referencedRelation: "donors"
+            referencedRelation: "donor"
             referencedColumns: ["donor_id"]
           },
         ]
@@ -401,7 +401,7 @@ export type Database = {
         }
         Relationships: []
       }
-      transfer_records: {
+      transfer_record: {
         Row: {
           blood_group_id: number | null
           destination_bank_id: number | null
@@ -431,42 +431,42 @@ export type Database = {
             foreignKeyName: "fk_tr_from"
             columns: ["source_bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "fk_tr_group"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "fk_tr_to"
             columns: ["destination_bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "transfer_records_blood_group_id_fkey"
             columns: ["blood_group_id"]
             isOneToOne: false
-            referencedRelation: "blood_groups"
+            referencedRelation: "blood_group"
             referencedColumns: ["blood_group_id"]
           },
           {
             foreignKeyName: "transfer_records_from_bank_id_fkey"
             columns: ["source_bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "transfer_records_to_bank_id_fkey"
             columns: ["destination_bank_id"]
             isOneToOne: false
-            referencedRelation: "blood_banks"
+            referencedRelation: "blood_bank"
             referencedColumns: ["bank_id"]
           },
         ]
