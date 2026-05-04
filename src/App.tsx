@@ -35,15 +35,15 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Dashboard />} />
-              <Route path="donor" element={<Donors />} />
+              <Route path="donors" element={<Donors />} />
               <Route path="stock" element={<BloodStock />} />
               <Route path="emergency" element={<Emergency />} />
               <Route path="donations" element={<Donations />} />
               <Route path="screening" element={<Screening />} />
               <Route path="banks" element={<Banks />} />
-              <Route path="hospital" element={<Hospitals />} />
+              <Route path="hospitals" element={<Hospitals />} />
               <Route path="staff" element={<Staff />} />
-              <Route path="camp" element={<Camps />} />
+              <Route path="camps" element={<Camps />} />
               <Route path="transfers" element={<Transfers />} />
               <Route path="reports" element={<Reports />} />
             </Route>
