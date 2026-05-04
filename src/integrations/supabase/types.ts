@@ -54,29 +54,23 @@ export type Database = {
         Row: {
           bank_id: number | null
           blood_group_id: number | null
-          blood_units: number
-          expiry_date: string | null
-          status: string
+          expiry_date: string
           stock_id: number
-          storage_location: string | null
+          units_available: number
         }
         Insert: {
           bank_id?: number | null
           blood_group_id?: number | null
-          blood_units?: number
-          expiry_date?: string | null
-          status?: string
+          expiry_date: string
           stock_id?: number
-          storage_location?: string | null
+          units_available?: number
         }
         Update: {
           bank_id?: number | null
           blood_group_id?: number | null
-          blood_units?: number
-          expiry_date?: string | null
-          status?: string
+          expiry_date?: string
           stock_id?: number
-          storage_location?: string | null
+          units_available?: number
         }
         Relationships: [
           {
@@ -111,25 +105,22 @@ export type Database = {
       }
       camps: {
         Row: {
-          camp_date: string
           camp_id: number
+          date: string
           location: string
-          organizer: string
-          total_donors: number
+          name: string
         }
         Insert: {
-          camp_date: string
           camp_id?: number
+          date: string
           location: string
-          organizer: string
-          total_donors?: number
+          name: string
         }
         Update: {
-          camp_date?: string
           camp_id?: number
+          date?: string
           location?: string
-          organizer?: string
-          total_donors?: number
+          name?: string
         }
         Relationships: []
       }
@@ -139,21 +130,21 @@ export type Database = {
           donation_date: string
           donation_id: number
           donor_id: number | null
-          units_donated: number
+          quantity: number
         }
         Insert: {
           bank_id?: number | null
           donation_date?: string
           donation_id?: number
           donor_id?: number | null
-          units_donated?: number
+          quantity?: number
         }
         Update: {
           bank_id?: number | null
           donation_date?: string
           donation_id?: number
           donor_id?: number | null
-          units_donated?: number
+          quantity?: number
         }
         Relationships: [
           {
@@ -194,9 +185,7 @@ export type Database = {
           donor_id: number
           email: string | null
           gender: string
-          last_donation_date: string | null
           name: string
-          status: string
           weight: number
         }
         Insert: {
@@ -206,9 +195,7 @@ export type Database = {
           donor_id?: number
           email?: string | null
           gender: string
-          last_donation_date?: string | null
           name: string
-          status?: string
           weight: number
         }
         Update: {
@@ -218,9 +205,7 @@ export type Database = {
           donor_id?: number
           email?: string | null
           gender?: string
-          last_donation_date?: string | null
           name?: string
-          status?: string
           weight?: number
         }
         Relationships: [
@@ -242,47 +227,30 @@ export type Database = {
       }
       eligibility_logs: {
         Row: {
-          donor_id: number | null
-          eligibility_status: string
-          log_date: string
           log_id: number
+          remarks: string | null
           screening_id: number | null
+          status: string
         }
         Insert: {
-          donor_id?: number | null
-          eligibility_status: string
-          log_date?: string
           log_id?: number
+          remarks?: string | null
           screening_id?: number | null
+          status: string
         }
         Update: {
-          donor_id?: number | null
-          eligibility_status?: string
-          log_date?: string
           log_id?: number
+          remarks?: string | null
           screening_id?: number | null
+          status?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "eligibility_logs_donor_id_fkey"
-            columns: ["donor_id"]
-            isOneToOne: false
-            referencedRelation: "donors"
-            referencedColumns: ["donor_id"]
-          },
           {
             foreignKeyName: "eligibility_logs_screening_id_fkey"
             columns: ["screening_id"]
             isOneToOne: false
             referencedRelation: "screenings"
             referencedColumns: ["screening_id"]
-          },
-          {
-            foreignKeyName: "fk_elog_donor"
-            columns: ["donor_id"]
-            isOneToOne: false
-            referencedRelation: "donors"
-            referencedColumns: ["donor_id"]
           },
           {
             foreignKeyName: "fk_elog_screen"
@@ -297,27 +265,24 @@ export type Database = {
         Row: {
           blood_group_id: number | null
           hospital_id: number | null
-          priority_level: string
+          request_date: string
           request_id: number
-          request_time: string
           status: string
           units_required: number
         }
         Insert: {
           blood_group_id?: number | null
           hospital_id?: number | null
-          priority_level?: string
+          request_date?: string
           request_id?: number
-          request_time?: string
           status?: string
           units_required: number
         }
         Update: {
           blood_group_id?: number | null
           hospital_id?: number | null
-          priority_level?: string
+          request_date?: string
           request_id?: number
-          request_time?: string
           status?: string
           units_required?: number
         }
@@ -375,34 +340,22 @@ export type Database = {
       }
       screenings: {
         Row: {
-          blood_pressure: string | null
-          disease_history: string | null
           donor_id: number | null
+          result: string
           screening_date: string
           screening_id: number
-          screening_result: string
-          status: string
-          temperature: number | null
         }
         Insert: {
-          blood_pressure?: string | null
-          disease_history?: string | null
           donor_id?: number | null
+          result?: string
           screening_date?: string
           screening_id?: number
-          screening_result?: string
-          status?: string
-          temperature?: number | null
         }
         Update: {
-          blood_pressure?: string | null
-          disease_history?: string | null
           donor_id?: number | null
+          result?: string
           screening_date?: string
           screening_id?: number
-          screening_result?: string
-          status?: string
-          temperature?: number | null
         }
         Relationships: [
           {
@@ -451,24 +404,24 @@ export type Database = {
       transfer_records: {
         Row: {
           blood_group_id: number | null
-          from_bank_id: number | null
-          to_bank_id: number | null
+          destination_bank_id: number | null
+          source_bank_id: number | null
           transfer_date: string
           transfer_id: number
           units_transferred: number
         }
         Insert: {
           blood_group_id?: number | null
-          from_bank_id?: number | null
-          to_bank_id?: number | null
+          destination_bank_id?: number | null
+          source_bank_id?: number | null
           transfer_date?: string
           transfer_id?: number
           units_transferred: number
         }
         Update: {
           blood_group_id?: number | null
-          from_bank_id?: number | null
-          to_bank_id?: number | null
+          destination_bank_id?: number | null
+          source_bank_id?: number | null
           transfer_date?: string
           transfer_id?: number
           units_transferred?: number
@@ -476,7 +429,7 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "fk_tr_from"
-            columns: ["from_bank_id"]
+            columns: ["source_bank_id"]
             isOneToOne: false
             referencedRelation: "blood_banks"
             referencedColumns: ["bank_id"]
@@ -490,7 +443,7 @@ export type Database = {
           },
           {
             foreignKeyName: "fk_tr_to"
-            columns: ["to_bank_id"]
+            columns: ["destination_bank_id"]
             isOneToOne: false
             referencedRelation: "blood_banks"
             referencedColumns: ["bank_id"]
@@ -504,14 +457,14 @@ export type Database = {
           },
           {
             foreignKeyName: "transfer_records_from_bank_id_fkey"
-            columns: ["from_bank_id"]
+            columns: ["source_bank_id"]
             isOneToOne: false
             referencedRelation: "blood_banks"
             referencedColumns: ["bank_id"]
           },
           {
             foreignKeyName: "transfer_records_to_bank_id_fkey"
-            columns: ["to_bank_id"]
+            columns: ["destination_bank_id"]
             isOneToOne: false
             referencedRelation: "blood_banks"
             referencedColumns: ["bank_id"]
