@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Plus, Search, Trash2 } from "lucide-react";
+import { Plus, Search, Trash2, Pencil } from "lucide-react";
 import { StatusBadge, BloodChip } from "@/components/StatusBadge";
 import { toast } from "sonner";
 
@@ -41,6 +41,7 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<Record<string, any>>(defaultRow);
+  const [editingId, setEditingId] = useState<any>(null);
 
   const { data = [], isLoading } = useQuery<any[]>({
     queryKey: [table],
@@ -57,6 +58,17 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
       if (error) throw error;
     },
     onSuccess: () => { toast.success("Record added"); qc.invalidateQueries({ queryKey: [table] }); setOpen(false); setForm(defaultRow); },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  const update = useMutation({
+    mutationFn: async ({ id, row }: { id: any; row: any }) => {
+      const payload = { ...row };
+      delete payload[pk];
+      const { error } = await (supabase as any).from(table).update(payload).eq(pk, id);
+      if (error) throw error;
+    },
+    onSuccess: () => { toast.success("Record updated"); qc.invalidateQueries({ queryKey: [table] }); setOpen(false); setEditingId(null); setForm(defaultRow); },
     onError: (e: any) => toast.error(e.message),
   });
 
@@ -78,20 +90,31 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
   const tableFields = fields.filter(f => !f.hideInTable);
   const formFields = fields.filter(f => !f.hideInForm);
 
+  const openEdit = (row: any) => {
+    setEditingId(row[pk]);
+    setForm(row);
+    setOpen(true);
+  };
+
+  const handleOpenChange = (v: boolean) => {
+    setOpen(v);
+    if (!v) { setEditingId(null); setForm(defaultRow); }
+  };
+
   return (
     <div className="space-y-6">
       <PageHeader
         title={title}
         subtitle={subtitle}
         action={
-          <Dialog open={open} onOpenChange={setOpen}>
+          <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
-              <Button className="gradient-primary text-primary-foreground shadow-elegant">
+              <Button onClick={() => { setEditingId(null); setForm(defaultRow); }} className="gradient-primary text-primary-foreground shadow-elegant">
                 <Plus className="h-4 w-4 mr-1" /> Add New
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-lg">
-              <DialogHeader><DialogTitle>Add {title}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{editingId ? "Edit" : "Add"} {title}</DialogTitle></DialogHeader>
               <div className="space-y-3 py-2">
                 {formFields.map(f => (
                   <div key={f.key}>
@@ -118,9 +141,13 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
                 ))}
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-                <Button onClick={() => create.mutate(form)} disabled={create.isPending} className="gradient-primary text-primary-foreground">
-                  {create.isPending ? "Saving..." : "Save"}
+                <Button variant="outline" onClick={() => handleOpenChange(false)}>Cancel</Button>
+                <Button
+                  onClick={() => editingId ? update.mutate({ id: editingId, row: form }) : create.mutate(form)}
+                  disabled={create.isPending || update.isPending}
+                  className="gradient-primary text-primary-foreground"
+                >
+                  {(create.isPending || update.isPending) ? "Saving..." : editingId ? "Update" : "Save"}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -142,7 +169,7 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
           <thead className="bg-muted/40 text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
               {tableFields.map(f => <th key={f.key} className="text-left px-6 py-3 font-semibold">{f.label}</th>)}
-              {canDelete && <th className="px-6 py-3"></th>}
+              <th className="px-6 py-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -155,13 +182,16 @@ export function CrudPage({ title, subtitle, table, pk, fields, searchKeys = [], 
                 {tableFields.map(f => (
                   <td key={f.key} className="px-6 py-3.5">{f.render ? f.render(row[f.key], row) : (row[f.key] ?? "—")}</td>
                 ))}
-                {canDelete && (
-                  <td className="px-6 py-3.5 text-right">
-                    <Button size="icon" variant="ghost" onClick={() => { if (confirm("Delete this record?")) remove.mutate(row[pk]); }}>
+                <td className="px-6 py-3.5 text-right whitespace-nowrap">
+                  <Button size="icon" variant="ghost" onClick={() => openEdit(row)} title="Edit">
+                    <Pencil className="h-4 w-4 text-primary" />
+                  </Button>
+                  {canDelete && (
+                    <Button size="icon" variant="ghost" onClick={() => { if (confirm("Delete this record?")) remove.mutate(row[pk]); }} title="Delete">
                       <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
-                  </td>
-                )}
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
