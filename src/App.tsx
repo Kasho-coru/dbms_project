@@ -19,6 +19,7 @@ import Staff from "./pages/app/Staff";
 import Camps from "./pages/app/Camps";
 import Transfers from "./pages/app/Transfers";
 import Reports from "./pages/app/Reports";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="donors" element={<Donors />} />

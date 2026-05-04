@@ -34,7 +34,7 @@ export default function AppLayout() {
               <div className="h-8 w-8 rounded-lg gradient-primary grid place-items-center">
                 <Heart className="h-4 w-4 text-primary-foreground" fill="currentColor" />
               </div>
-              <span className="font-display font-bold">HemaCare</span>
+              <span className="font-display font-bold">SBB-ERMS</span>
             </NavLink>
           </div>
           <div className="flex items-center gap-2">
