@@ -30,8 +30,8 @@ export function AppSidebar() {
             <Heart className="h-5 w-5 text-primary-foreground" fill="currentColor" />
           </div>
           <div>
-            <div className="font-display font-bold text-base leading-tight">HemaCare</div>
-            <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60">Emergency Command</div>
+            <div className="font-display font-bold text-base leading-tight">SBB-ERMS</div>
+            <div className="text-[10px] uppercase tracking-widest text-sidebar-foreground/60">Smart Blood Bank</div>
           </div>
         </div>
       </div>
@@ -55,8 +55,8 @@ export function AppSidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="px-6 py-4 border-t border-sidebar-border text-xs text-sidebar-foreground/50">
-        © 2026 HemaCare Systems
+      <div className="px-6 py-4 border-t border-sidebar-border text-[10px] leading-snug text-sidebar-foreground/50">
+        © 2026 Smart Blood Bank & Emergency Response Management System
       </div>
     </aside>
   );
