@@ -14,7 +14,7 @@ export default function Donors() {
       table="donors"
       pk="donor_id"
       searchKeys={["name","email","contact_number"]}
-      defaultRow={{ status: "Active", gender: "Male" }}
+      defaultRow={{ gender: "Male" }}
       fields={[
         { key: "name", label: "Name", required: true },
         { key: "age", label: "Age", type: "number", required: true },
@@ -23,8 +23,6 @@ export default function Donors() {
         { key: "blood_group_id", label: "Blood Group", type: "select", options: groupOptions, render: v => <BloodChip group={groupName(v)} /> },
         { key: "email", label: "Email" },
         { key: "contact_number", label: "Contact" },
-        { key: "last_donation_date", label: "Last Donation", type: "date" },
-        { key: "status", label: "Status", type: "select", options: ["Active","Deferred","Inactive"], render: v => <StatusBadge status={v} /> },
       ]}
     />
   );
