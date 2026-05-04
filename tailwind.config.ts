@@ -13,6 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,6 +52,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        critical: "hsl(var(--critical))",
+        "primary-glow": "hsl(var(--primary-glow))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -64,6 +73,11 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        "fade-in": { "0%": { opacity: "0", transform: "translateY(8px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        "scale-in": { "0%": { opacity: "0", transform: "scale(0.96)" }, "100%": { opacity: "1", transform: "scale(1)" } },
+        "slide-in-right": { "0%": { transform: "translateX(20px)", opacity: "0" }, "100%": { transform: "translateX(0)", opacity: "1" } },
+        "pulse-ring": { "0%,100%": { boxShadow: "0 0 0 0 hsl(var(--primary) / 0.5)" }, "50%": { boxShadow: "0 0 0 12px hsl(var(--primary) / 0)" } },
+        "blood-drop": { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },
         "accordion-down": {
           from: {
             height: "0",
@@ -82,6 +96,11 @@ export default {
         },
       },
       animation: {
+        "fade-in": "fade-in 0.4s ease-out",
+        "scale-in": "scale-in 0.25s ease-out",
+        "slide-in-right": "slide-in-right 0.3s ease-out",
+        "pulse-ring": "pulse-ring 2s ease-out infinite",
+        "blood-drop": "blood-drop 2.5s ease-in-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
