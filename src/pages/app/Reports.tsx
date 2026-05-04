@@ -16,10 +16,10 @@ function downloadCsv(name: string, rows: any[]) {
   toast.success(`${name}.csv downloaded`);
 }
 export default function Reports() {
-  const donors = useTable<any>("donors");
+  const donors = useTable<any>("donor");
   const stock = useTable<any>("blood_stock");
-  const requests = useTable<any>("emergency_requests");
-  const donations = useTable<any>("donation_records");
+  const requests = useTable<any>("emergency_request");
+  const donations = useTable<any>("donation_record");
   const reports = [
     { title: "Donor Report", desc: "All registered donors with status.", data: donors.data, file: "donor_report" },
     { title: "Stock Report", desc: "Current inventory across all banks.", data: stock.data, file: "stock_report" },

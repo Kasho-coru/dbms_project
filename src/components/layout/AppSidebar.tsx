@@ -1,17 +1,19 @@
 import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard, Users, Droplet, Siren, Syringe, ClipboardCheck,
-  Building2, Hospital, UserCog, Tent, ArrowLeftRight, FileText, Heart
+  Building2, Hospital, UserCog, Tent, ArrowLeftRight, FileText, Heart, BadgeCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/app/donors", label: "Donors", icon: Users },
+  { to: "/app/blood-groups", label: "Blood Groups", icon: Heart },
   { to: "/app/stock", label: "Blood Stock", icon: Droplet },
   { to: "/app/emergency", label: "Emergency", icon: Siren },
   { to: "/app/donations", label: "Donations", icon: Syringe },
   { to: "/app/screening", label: "Screening", icon: ClipboardCheck },
+  { to: "/app/eligibility", label: "Eligibility Logs", icon: BadgeCheck },
   { to: "/app/banks", label: "Blood Banks", icon: Building2 },
   { to: "/app/hospitals", label: "Hospitals", icon: Hospital },
   { to: "/app/staff", label: "Staff", icon: UserCog },

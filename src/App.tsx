@@ -9,10 +9,12 @@ import NotFound from "./pages/NotFound.tsx";
 import AppLayout from "./components/layout/AppLayout";
 import Dashboard from "./pages/app/Dashboard";
 import Donors from "./pages/app/Donors";
+import BloodGroups from "./pages/app/BloodGroups";
 import BloodStock from "./pages/app/BloodStock";
 import Emergency from "./pages/app/Emergency";
 import Donations from "./pages/app/Donations";
 import Screening from "./pages/app/Screening";
+import EligibilityLogs from "./pages/app/EligibilityLogs";
 import Banks from "./pages/app/Banks";
 import Hospitals from "./pages/app/Hospitals";
 import Staff from "./pages/app/Staff";
@@ -36,10 +38,12 @@ const App = () => (
             <Route path="/app" element={<AppLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="donors" element={<Donors />} />
+              <Route path="blood-groups" element={<BloodGroups />} />
               <Route path="stock" element={<BloodStock />} />
               <Route path="emergency" element={<Emergency />} />
               <Route path="donations" element={<Donations />} />
               <Route path="screening" element={<Screening />} />
+              <Route path="eligibility" element={<EligibilityLogs />} />
               <Route path="banks" element={<Banks />} />
               <Route path="hospitals" element={<Hospitals />} />
               <Route path="staff" element={<Staff />} />
