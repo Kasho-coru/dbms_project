@@ -2,13 +2,13 @@ import { CrudPage } from "@/components/CrudPage";
 import { useTable } from "@/hooks/useTable";
 import { BloodChip, StatusBadge } from "@/components/StatusBadge";
 export default function Emergency() {
-  const groups = useTable<any>("blood_groups");
-  const hospitals = useTable<any>("hospitals");
+  const groups = useTable<any>("blood_group");
+  const hospitals = useTable<any>("hospital");
   const gName = (id: number) => groups.data?.find(g => g.blood_group_id === id)?.group_name;
   const hName = (id: number) => hospitals.data?.find(h => h.hospital_id === id)?.name;
   return (
     <CrudPage title="Emergency Requests" subtitle="Critical dispatch coordination — minutes save lives."
-      table="emergency_requests" pk="request_id"
+      table="emergency_request" pk="request_id"
       defaultRow={{ status: "Pending", units_required: 1, request_date: new Date().toISOString().split("T")[0] }}
       fields={[
         { key: "hospital_id", label: "Hospital", type: "select", options: (hospitals.data ?? []).map(h => ({ label: h.name, value: h.hospital_id })), render: v => hName(v) },

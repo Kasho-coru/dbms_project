@@ -3,7 +3,7 @@ import { useTable } from "@/hooks/useTable";
 import { BloodChip, StatusBadge } from "@/components/StatusBadge";
 
 export default function Donors() {
-  const groups = useTable<any>("blood_groups");
+  const groups = useTable<any>("blood_group");
   const groupOptions = (groups.data ?? []).map(g => ({ label: g.group_name, value: g.blood_group_id }));
   const groupName = (id: number) => groups.data?.find(g => g.blood_group_id === id)?.group_name;
 
@@ -11,7 +11,7 @@ export default function Donors() {
     <CrudPage
       title="Donor Management"
       subtitle="Register, search, and manage all registered blood donors."
-      table="donors"
+      table="donor"
       pk="donor_id"
       searchKeys={["name","email","contact_number"]}
       defaultRow={{ gender: "Male" }}

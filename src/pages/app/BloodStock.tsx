@@ -3,8 +3,8 @@ import { useTable } from "@/hooks/useTable";
 import { BloodChip } from "@/components/StatusBadge";
 
 export default function BloodStock() {
-  const groups = useTable<any>("blood_groups");
-  const banks = useTable<any>("blood_banks");
+  const groups = useTable<any>("blood_group");
+  const banks = useTable<any>("blood_bank");
   const groupName = (id: number) => groups.data?.find(g => g.blood_group_id === id)?.group_name;
   const bankName = (id: number) => banks.data?.find(b => b.bank_id === id)?.name;
   return (

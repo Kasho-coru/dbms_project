@@ -7,14 +7,14 @@ import { StatusBadge, BloodChip } from "@/components/StatusBadge";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from "recharts";
 
 export default function Dashboard() {
-  const donors = useTable<any>("donors");
+  const donors = useTable<any>("donor");
   const stock = useTable<any>("blood_stock");
-  const groups = useTable<any>("blood_groups");
-  const requests = useTable<any>("emergency_requests");
-  const banks = useTable<any>("blood_banks");
-  const donations = useTable<any>("donation_records");
+  const groups = useTable<any>("blood_group");
+  const requests = useTable<any>("emergency_request");
+  const banks = useTable<any>("blood_bank");
+  const donations = useTable<any>("donation_record");
   const staff = useTable<any>("staff");
-  const hospitals = useTable<any>("hospitals");
+  const hospitals = useTable<any>("hospital");
 
   const totalUnits = (stock.data ?? []).reduce((s, r) => s + (r.units_available || 0), 0);
   const pendingReqs = (requests.data ?? []).filter(r => r.status === "Pending" || r.status === "In Transit").length;

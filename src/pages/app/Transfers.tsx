@@ -2,13 +2,13 @@ import { CrudPage } from "@/components/CrudPage";
 import { useTable } from "@/hooks/useTable";
 import { BloodChip } from "@/components/StatusBadge";
 export default function Transfers() {
-  const banks = useTable<any>("blood_banks");
-  const groups = useTable<any>("blood_groups");
+  const banks = useTable<any>("blood_bank");
+  const groups = useTable<any>("blood_group");
   const bName = (id: number) => banks.data?.find(b => b.bank_id === id)?.name;
   const gName = (id: number) => groups.data?.find(g => g.blood_group_id === id)?.group_name;
   return (
     <CrudPage title="Blood Transfers" subtitle="Inter-bank stock movement and balancing."
-      table="transfer_records" pk="transfer_id"
+      table="transfer_record" pk="transfer_id"
       defaultRow={{ units_transferred: 1, transfer_date: new Date().toISOString().split("T")[0] }}
       fields={[
         { key: "source_bank_id", label: "From", type: "select", options: (banks.data ?? []).map(b => ({ label: b.name, value: b.bank_id })), render: v => bName(v) },
