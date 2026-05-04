@@ -16,7 +16,7 @@ export default function Dashboard() {
   const staff = useTable<any>("staff");
   const hospitals = useTable<any>("hospitals");
 
-  const totalUnits = (stock.data ?? []).reduce((s, r) => s + (r.blood_units || 0), 0);
+  const totalUnits = (stock.data ?? []).reduce((s, r) => s + (r.units_available || 0), 0);
   const pendingReqs = (requests.data ?? []).filter(r => r.status === "Pending" || r.status === "In Transit").length;
   const onDuty = (staff.data ?? []).filter(s => s.availability !== "Off-duty").length;
 
@@ -28,10 +28,10 @@ export default function Dashboard() {
   // Aggregate stock per group
   const chart = (groups.data ?? []).map(g => ({
     name: g.group_name,
-    units: (stock.data ?? []).filter(s => s.blood_group_id === g.blood_group_id).reduce((s, r) => s + r.blood_units, 0),
+    units: (stock.data ?? []).filter(s => s.blood_group_id === g.blood_group_id).reduce((s, r) => s + (r.units_available || 0), 0),
   }));
 
-  const lowStock = (stock.data ?? []).filter(s => s.blood_units < 20);
+  const lowStock = (stock.data ?? []).filter(s => (s.units_available || 0) < 20);
 
   return (
     <div className="space-y-8">
@@ -68,8 +68,8 @@ export default function Dashboard() {
             {(requests.data ?? []).slice(0,4).map(r => (
               <div key={r.request_id} className="p-3 rounded-lg border border-border hover:border-primary/40 transition-smooth">
                 <div className="flex items-center justify-between mb-1">
-                  <StatusBadge status={r.priority_level} />
-                  <span className="text-xs text-muted-foreground">{new Date(r.request_time).toLocaleTimeString()}</span>
+                  <StatusBadge status={r.status} />
+                  <span className="text-xs text-muted-foreground">{r.request_date}</span>
                 </div>
                 <div className="text-sm font-semibold">{hospName(r.hospital_id)}</div>
                 <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground">
@@ -95,7 +95,7 @@ export default function Dashboard() {
                   <td className="py-3 font-medium">{donorName(d.donor_id)}</td>
                   <td>{bankName(d.bank_id)}</td>
                   <td>{d.donation_date}</td>
-                  <td><span className="font-semibold text-primary">{d.units_donated}</span></td>
+                  <td><span className="font-semibold text-primary">{d.quantity}</span></td>
                 </tr>
               ))}
             </tbody>
