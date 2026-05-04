@@ -35,9 +35,14 @@ export default function Index() {
             <a href="#stats" className="hover:text-primary transition-smooth">Impact</a>
             <a href="#contact" className="hover:text-primary transition-smooth">Contact</a>
           </nav>
-          <Button asChild className="gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
-            <Link to="/app">Open Dashboard <ArrowRight className="ml-1 h-4 w-4" /></Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline">
+              <Link to="/app">Dashboard</Link>
+            </Button>
+            <Button asChild className="gradient-primary text-primary-foreground hover:opacity-90 shadow-elegant">
+              <Link to="/login">Sign In <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            </Button>
+          </div>
         </div>
       </header>
 
