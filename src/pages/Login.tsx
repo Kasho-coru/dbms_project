@@ -16,15 +16,15 @@ const roles = [
 export default function Login() {
   const nav = useNavigate();
   const [role, setRole] = useState("admin");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !pass) { toast.error("Enter credentials"); return; }
+    if (!username || !pass) { toast.error("Enter credentials"); return; }
     localStorage.setItem("sbb_role", role);
-    localStorage.setItem("sbb_email", email);
-    toast.success(`Signed in as ${role}`);
+    localStorage.setItem("sbb_username", username);
+    toast.success(`Welcome ${username}`);
     nav("/app");
   };
 
@@ -56,16 +56,16 @@ export default function Login() {
 
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <Label className="text-xs">Email</Label>
-            <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@hospital.com" />
+            <Label className="text-xs">Username</Label>
+            <Input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="e.g. Coral" />
           </div>
           <div>
             <Label className="text-xs">Password</Label>
             <Input type="password" value={pass} onChange={e => setPass(e.target.value)} placeholder="••••••••" />
           </div>
-          <Button type="submit" className="w-full gradient-primary text-primary-foreground shadow-elegant">Sign In</Button>
+          <Button type="submit" className="w-full gradient-primary text-primary-foreground shadow-elegant">Sign In / Sign Up</Button>
         </form>
-        <p className="text-xs text-center text-muted-foreground mt-5">Demo login — any email/password works.</p>
+        <p className="text-xs text-center text-muted-foreground mt-5">Demo login — any username/password works.</p>
       </Card>
     </div>
   );
