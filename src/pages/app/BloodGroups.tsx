@@ -10,7 +10,8 @@ export default function BloodGroups() {
       pk="blood_group_id"
       searchKeys={["group_name"]}
       fields={[
-        { key: "group_name", label: "Group Name", required: true, render: v => <BloodChip group={v} /> },
+        { key: "blood_group_id", label: "Blood Group ID", type: "number", required: true },
+        { key: "group_name", label: "Group Name", type: "select", options: ["A+","A-","B+","B-","AB+","AB-","O+","O-"], required: true, render: v => <BloodChip group={v} /> },
       ]}
     />
   );
