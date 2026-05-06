@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Heart, Shield, Building2, User } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const roles = [
   { id: "admin", label: "Admin", icon: Shield, desc: "Full system control" },
@@ -16,16 +17,38 @@ const roles = [
 export default function Login() {
   const nav = useNavigate();
   const [role, setRole] = useState("admin");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [loading, setLoading] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username || !pass) { toast.error("Enter credentials"); return; }
-    localStorage.setItem("sbb_role", role);
-    localStorage.setItem("sbb_username", username);
-    toast.success(`Welcome ${username}`);
-    nav("/app");
+    if (!email || !pass) { toast.error("Enter email and password"); return; }
+    setLoading(true);
+    try {
+      if (mode === "signup") {
+        const { error } = await supabase.auth.signUp({
+          email, password: pass,
+          options: { emailRedirectTo: `${window.location.origin}/app` }
+        });
+        if (error) throw error;
+        toast.success("Account created. Check your email to confirm, then sign in.");
+        setMode("signin");
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass });
+        if (error) throw error;
+        const uname = data.user?.email?.split("@")[0] || "User";
+        localStorage.setItem("sbb_role", role);
+        localStorage.setItem("sbb_username", uname);
+        toast.success(`Welcome ${uname}`);
+        nav("/app");
+      }
+    } catch (err: any) {
+      toast.error(err.message || "Authentication failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,16 +79,22 @@ export default function Login() {
 
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <Label className="text-xs">Username</Label>
-            <Input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="e.g. Coral" />
+            <Label className="text-xs">Email</Label>
+            <Input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" />
           </div>
           <div>
             <Label className="text-xs">Password</Label>
             <Input type="password" value={pass} onChange={e => setPass(e.target.value)} placeholder="••••••••" />
           </div>
-          <Button type="submit" className="w-full gradient-primary text-primary-foreground shadow-elegant">Sign In / Sign Up</Button>
+          <Button type="submit" disabled={loading} className="w-full gradient-primary text-primary-foreground shadow-elegant">
+            {loading ? "Please wait..." : mode === "signin" ? "Sign In" : "Sign Up"}
+          </Button>
+          <button type="button" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+            className="w-full text-xs text-muted-foreground hover:text-primary transition-smooth">
+            {mode === "signin" ? "No account? Sign up" : "Have an account? Sign in"}
+          </button>
         </form>
-        <p className="text-xs text-center text-muted-foreground mt-5">Demo login — any username/password works.</p>
+        <p className="text-xs text-center text-muted-foreground mt-5">Tip: Add a test user in Cloud → Users for quick access.</p>
       </Card>
     </div>
   );
